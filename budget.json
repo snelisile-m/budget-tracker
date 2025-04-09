@@ -1,0 +1,20 @@
+[
+    {
+        "type": "income",
+        "category": "freelance",
+        "amount": 5000.0,
+        "date": "09/Apr/2025"
+    },
+    {
+        "type": "income",
+        "category": "salary",
+        "amount": 20000.0,
+        "date": "09/Apr/2025"
+    },
+    {
+        "type": "expense",
+        "category": "medial expense",
+        "amount": 2200.0,
+        "date": "09/Apr/2025"
+    }
+]
