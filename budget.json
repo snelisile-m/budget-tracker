@@ -16,5 +16,11 @@
         "category": "medial expense",
         "amount": 2200.0,
         "date": "09/Apr/2025"
+    },
+    {
+        "type": "expense",
+        "category": "toiletries",
+        "amount": 1500.0,
+        "date": "19/Apr/2025"
     }
 ]

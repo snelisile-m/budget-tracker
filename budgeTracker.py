@@ -1,4 +1,5 @@
 from datetime import datetime
+import filterTransaction as filterTr
 import json
 
 
@@ -6,11 +7,14 @@ def menu():
     print("\nWelcome to the budget tracker program")
     while True:
         updated_data = get_data()
-        print("Select one of the menu options:\n")
-        user_choice = input("   1. Add an income or expense entry\n"
-                            "   2. View current balance\n"
-                            "   3. View transaction history\n"
-                            "   4. Exit the program\n")
+        print("\nYou have the following options:")
+        print("   1. Add an income or expense entry\n"
+              "   2. View current balance\n"
+              "   3. View transaction history\n"
+              "   4. Filter transaction history\n"
+              "   5. Exit the program\n")
+        
+        user_choice = input("Select one of the menu options: ")
 
         if user_choice == "1":
             transaction_handler()
@@ -19,6 +23,8 @@ def menu():
         elif user_choice == "3":
             view_history(updated_data)
         elif user_choice == "4":
+            view_history(filterTr.filter_transactions(updated_data))
+        elif user_choice == "5":
             print("\nThank you for using the budget tracker program.\n")
             return
         else:
@@ -29,6 +35,9 @@ def transaction_handler():
     transaction_data = {}
 
     transaction_type = input("\nEnter transaction type (income/expense): ")
+    if transaction_type not in ("income", "expense"):
+        print("Invalid transaction type. Please enter 'income' or 'expense'")
+        return
     category = input("Enter category (eg: groceries, salary): ")
     try:
         amount = float(input("Enter amount: "))
@@ -46,13 +55,15 @@ def transaction_handler():
 
 
 def save_transaction(transaction_dict):
+    FILE_NAME = "budget.json"
     try:
         transactions = get_data()
     except (FileNotFoundError, json.JSONDecodeError):
         print("Error saving transaction")
+        return
      
     transactions.append(transaction_dict)
-    with open("budget.json", "w") as file:
+    with open(FILE_NAME, "w") as file:
         
         # If you have a Python object, you can convert it
         # into a JSON string by using the json.dumps() method.
@@ -90,7 +101,7 @@ def get_data():
 def view_history(transaction_list):
     if transaction_list:
         for idx, transaction in enumerate(transaction_list):
-            print(f"Transaction: {idx + 1}\n"
+            print(f"\nTransaction: {idx + 1}\n"
                   f"Type:        {transaction['type']}\n"
                   f"Category:    {transaction['category']}\n"
                   f"Amount:      {transaction['amount']}\n"
